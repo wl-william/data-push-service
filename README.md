@@ -23,7 +23,7 @@ spring:
 
 push:
   api:
-    url: http://10.15.149.29:80/api/ai/lingma_usage/create
+    url: http://<your-api-host>:80/api/ai/lingma_usage/create
 ```
 
 ### 2. 编译打包

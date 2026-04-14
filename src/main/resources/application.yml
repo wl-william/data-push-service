@@ -10,7 +10,7 @@ spring:
 
 push:
   api:
-    url: http://10.15.149.29:80/api/ai/lingma_usage/create
+    url: http://<your-api-host>:80/api/ai/lingma_usage/create
     connect-timeout: 5000
     read-timeout: 10000
   query:
