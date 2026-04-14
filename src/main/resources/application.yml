@@ -1,0 +1,40 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/dwd?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: your_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+push:
+  api:
+    url: http://10.15.149.29:80/api/ai/lingma_usage/create
+    connect-timeout: 5000
+    read-timeout: 10000
+  query:
+    sql: >
+      select
+        concat(cast(yearweek(coding_date,3) as char),'周') as week_day,
+        dept_name,
+        t2.user_name,
+        sum(chatturnsaccepted) as chatturnsaccepted,
+        sum(linesAccepted) as lines_accepted,
+        sum(linessuggested) as lines_suggested,
+        sum(totalChatTurns) as total_chat_turns,
+        sum(countaccepted) as count_accepted,
+        sum(countsuggested) as count_suggested,
+        case when sum(countsuggested) = 0 then 0 else sum(countaccepted) / sum(countsuggested) end as accept_rate,
+        sum(totallineschanged) as total_lines_changed,
+        sum(totallinesaccepted) as total_lines_accepted,
+        case when sum(totallineschanged) = 0 then 0 else sum(totallinesaccepted) / sum(totallineschanged) end as generate_rate
+      from dwd.dwd_lingma_coding_info t1
+      join dwd.dwd_lingma_dept_user_info t2 on t1.userid = t2.user_id
+      where t1.coding_date >= '${start}'
+      and t1.coding_date <= '${end}'
+      group by t2.user_name, t2.dept_name, cast(yearweek(coding_date,3) as char)
+
+logging:
+  level:
+    com.datapush: INFO
