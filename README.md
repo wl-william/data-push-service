@@ -75,7 +75,7 @@ curl -X POST "http://localhost:8081/api/push/lingma-usage?start=2026-03-23&end=2
 
 | 配置项 | 说明 | 默认值 |
 |--------|------|--------|
-| `push.api.url` | 推送接口地址 | `http://10.15.149.29:80/api/ai/lingma_usage/create` |
+| `push.api.url` | 推送接口地址 | `http://<your-api-host>:80/api/ai/lingma_usage/create` |
 | `push.api.connect-timeout` | 连接超时(ms) | `5000` |
 | `push.api.read-timeout` | 读取超时(ms) | `10000` |
 
